@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: diplomas-upn
+    #restart: always
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+      # - 80:80
+    volumes:
+      - ./app:/app
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DEBUG: ${DEBUG}
+      SECRET_KEY: ${SECRET_KEY}
+
+  db:
+    image: mariadb
+    container_name: diplomas-upn-db
+    #restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - 3310:3306
+
+volumes:
+  db:
