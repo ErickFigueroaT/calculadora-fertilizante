@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: diplomas-upn
+    container_name: fertilizantes-upn
     #restart: always
     depends_on:
       - db
@@ -24,7 +24,7 @@ services:
 
   db:
     image: mariadb
-    container_name: diplomas-upn-db
+    container_name: fertilizantes-upn-db
     #restart: always
     environment:
       MYSQL_DATABASE: ${DB_NAME}
