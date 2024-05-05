@@ -1,5 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
+
+{% block titulo %}
+    Bienvenido al Sistema de SS
+{% endblock titulo %}
+
+{% block contenido %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,4 +55,4 @@
         window.onload = animarTexto;
     </script>
 </body>
-</html>
+{% endblock contenido %}
