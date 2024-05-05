@@ -1,0 +1,31 @@
+{% extends 'base.html' %}   
+
+{% block titulo %}
+Tipo Cultivo
+{% endblock titulo %}
+
+{% block contenido %}
+<h1>Tipo Cultivo</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipo in object_list %}
+            <tr>
+                <td>{{tipo.id}}</td>
+                <td>{{tipo.nombre}}</td>
+                <td>
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'eliminar_tipo_cultivo' tipo.id%}">Eliminar</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'editar_tipo_cultivo' tipo.id%}">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock contenido %}
