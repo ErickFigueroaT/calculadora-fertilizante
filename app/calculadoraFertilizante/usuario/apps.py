@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CerealesConfig(AppConfig):
+class UsuarioConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'cereales'
+    name = 'usuario'
