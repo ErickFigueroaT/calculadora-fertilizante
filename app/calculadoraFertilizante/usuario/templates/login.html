@@ -1,4 +1,7 @@
-{% load static %}
+{% extends 'base.html' %}
+
+
+{% block contenido %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,21 +9,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login calculadora de fertilizantes</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{% static 'css/icheck-bootstrap.min.css' %}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+      <a href="../../index2.html" class="h1"><b>Inicio de </b>Sesion</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
@@ -66,6 +61,7 @@
           </div>
           <!-- /.col -->
         </div>
+        
       </form>
 
       <div class="social-auth-links text-center mt-2 mb-3">
@@ -99,3 +95,4 @@
 <script src="{% static'js/adminlte.min.js' % }"></script>
 </body>
 </html>
+{% endblock contenido %}
