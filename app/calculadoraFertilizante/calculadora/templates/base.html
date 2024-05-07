@@ -40,6 +40,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{%url 'lista_cultivo'%}">Cultivos</a>
                     </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" id="logoutForm">
+                            {% csrf_token %}
+                            <button type="submit">Cerrar sesión</button>
+                        </form>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
