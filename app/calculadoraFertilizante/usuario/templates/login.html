@@ -1,25 +1,33 @@
-{% extends 'base.html' %}
-{% block contenido %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login calculadora de fertilizantes</title>
+  <title>Login Servicio Social</title>
 
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'css/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../..//usuario/entrar/" class="h1"><b>Inicio de </b>Sesion</a>
+      <a href="{% url 'bienvenida' %}" class="h1"><b>Servicio Social</b>LTE</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
       
       {% if form.errors %}
         <div class = "alert alert-warning">
+          {{form.errors}}
           Verifica tus datos de acceso  
         </div>
       {% endif %}
@@ -28,7 +36,7 @@
       <form  method="post">
         {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="username" name = 'username'>
+          <input type="text" class="form-control" placeholder="username" name="username">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -36,7 +44,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password" name = 'password'>
+          <input type="password" class="form-control" placeholder="Password" name="password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -54,12 +62,11 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-block btn-success" >Ingresar</button>
+            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
             <input type="hidden" name="next" value ="{{next}}">
           </div>
           <!-- /.col -->
         </div>
-        
       </form>
 
       <div class="social-auth-links text-center mt-2 mb-3">
@@ -86,11 +93,10 @@
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="{% static'js/jquery.min.js' % }"></script>
+<script src="{% static 'js/jquery.min.js' % }"></script>
 <!-- Bootstrap 4 -->
-<script src="{% static'js/bootstrap.bundle.min.js' % }"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' % }"></script>
 <!-- AdminLTE App -->
-<script src="{% static'js/adminlte.min.js' % }"></script>
+<script src="{% static 'js/adminlte.min.js' % }"></script>
 </body>
 </html>
-{% endblock contenido %}
