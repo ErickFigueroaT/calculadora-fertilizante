@@ -1,13 +1,73 @@
-{% extends 'base.html' %}
 
-
-{% block titulo %}
-Bienvenida al Sistema de SS
-{% endblock titulo %}
-
+{% load static %}
 
 {% block contenido %}
-<br>
-<hr>
-<h1>Bienvenid@ a la Calculadora Fertilizante</h1>
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    .welcome-container {
+        background-image: url("{% static 'img/cultivosT.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .welcome-buttons {
+        display: flex;
+        justify-content: space-around;
+        gap: 50px;
+    }
+
+    .btn-welcome {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 10px;
+        margin-left: 20px;
+        padding: 20px;
+        font-size: 45px;
+        font-family: 'Montserrat';
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #28a745;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn-welcome i {
+        font-size: 150px;
+        
+        margin-bottom: 20px;
+    }
+
+    .btn-welcome:hover {
+        background-color: rgba(40, 167, 69, 0.8);
+        color: #fff;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+</style>
+
+<div class="welcome-container">
+    <div class="welcome-buttons">
+        <div class="welcome-buttons">
+            <a href="{% url 'calculadora' %}" class="btn-welcome"><i class="fas fa-calculator"></i>Calculadora</a>
+            <a href="{% url 'lista_cultivo' %}" class="btn-welcome"><i class="fas fa-seedling"></i>Cultivos</a>
+        </div>
+    </div>
+</div>
 {% endblock contenido %}
