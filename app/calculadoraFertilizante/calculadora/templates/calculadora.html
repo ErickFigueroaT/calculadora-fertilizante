@@ -52,10 +52,11 @@ cultivos
         </tbody>
     </table>
 
-<h2>Resultado</h2>
 <blockquote id="resultado">
     
     {% if todo %}
+    <h2>Resultado</h2>
+    <button type="submit" name="generar_pdf" id="pdfSubmit">Generar PDF</button>
     <table class="table" id="tablaCalculo" >
         <thead>
             <tr>
@@ -74,10 +75,8 @@ cultivos
             </tbody>    
         {% endfor %}
     </table>
-    {% endif %}
-        {% csrf_token %}
-        <button type="submit" name="generar_pdf" id="pdfSubmit">Generar PDF</button>
     </form>
+    {% endif %}
     
 </blockquote>
 
