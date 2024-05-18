@@ -1,13 +1,72 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block titulo %}
-    Calculadora de fertilizantes
+cultivos
 {% endblock titulo %}
-    
 
 {% block contenido %}
+<h1>cultivos</h1>
 
-<h1>Todo para calcular</h1>
+    
+<div class="mb-3">
+    <label for="input1" class="form-label">Rendimiento (kg ha<sup>-1</sup>)</label>
+    <input type="number" class="form-control" id="input1" name="input1" step="0.01" placeholder="Ingrese el rendimiento del grano">
+</div>
+
+<div class="mb-3">
+    <label for="input2" class="form-label">Humedad del Grano (%)</label>
+    <input type="number" class="form-control" id="input2" name="input2" step="0.01" placeholder="Ingrese la humedad del grano">
+</div>
+
+  <table class="table" >
+ 
+    <thead>
+        <tr>
+            <th>Nombre de cultivo</th>
+            <th>Tipo Cultivo</th>
+            <th>Accion</th>
+          
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for cultivo in object_list %}
+        <tr>
+            <td>{{cultivo.nombre}}</td>
+            <td>{{cultivo.tipo_cultivo}}</td>
+            
+            <td>
+                <button type="button"  class="btn btn-success" >
+                    Calcular
+                </button>
+                
+            </td>
+            
+        {% empty %}
+        <tr>
+            <td colspan="4">
+                <p>No exixsten cultivos aun</p>
+
+            </td>
+        </tr>
+        {% endfor %}
+      
+    </tbody>
+  </table>
+  
+  <H2>Resultado</H2>
+  <blockquote>Aqui va el resultado obtenido esto falta, despues de presionar el boton, se supone que al presionar el boton se mada el 
+    id del cultivo, los datos el rendimiento y humedad, para con estos hacer los calculos y despues mostrarlos cuanto ocupa para cada elemento
+    ya sea en forma horizontal o vertical
+  </blockquote>
+
+
+
 
 {% endblock contenido %}
+
+{% block scripts %}
+    
+{% endblock scripts %}
+    
