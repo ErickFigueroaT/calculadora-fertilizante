@@ -25,6 +25,7 @@ class Cultivo(models.Model):
     Mo = models.FloatField(default=0.0)
     Zn = models.FloatField(default=0.0)
     Ni = models.FloatField(default=0.0)
+    
     #para el IC de cada elemento
     icN = models.FloatField(default=0.0)
     icP = models.FloatField(default=0.0)
@@ -40,5 +41,17 @@ class Cultivo(models.Model):
     icMo = models.FloatField(default=0.0)
     icZn = models.FloatField(default=0.0)
     icNi = models.FloatField(default=0.0)
-    def __str__(self) :
-        return self.nombre
+
+    def str(self):
+        nutrientes = {
+            "N": self.N, "P": self.P, "K": self.K, "Ca": self.Ca, "Mg": self.Mg,
+            "S": self.S, "B": self.B, "Cl": self.Cl, "Cu": self.Cu, "Fe": self.Fe,
+            "Mn": self.Mn, "Mo": self.Mo, "Zn": self.Zn, "Ni": self.Ni
+        }
+        ics = {
+            "icN": self.icN, "icP": self.icP, "icK": self.icK, "icCa": self.icCa,
+            "icMg": self.icMg, "icS": self.icS, "icB": self.icB, "icCl": self.icCl,
+            "icCu": self.icCu, "icFe": self.icFe, "icMn": self.icMn, "icMo": self.icMo,
+            "icZn": self.icZn, "icNi": self.icNi
+        }
+        return self.nombre, self.tipo_cultivo, nutrientes, ics
