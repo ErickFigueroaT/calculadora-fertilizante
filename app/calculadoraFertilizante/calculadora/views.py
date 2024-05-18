@@ -62,11 +62,9 @@ def calculadora(request):
         context['todo'] = todo
 
         # Redirigir a la vista generar_pdf con los datos calculados
-        pdf = generar_pdf(request, nombre, rendimiento, humedad, todo)
-
         if 'generar_pdf' in request.POST:
-            return pdf 
-            
+            return generar_pdf(request, nombre, rendimiento, humedad, todo)
+        
     return render(request, 'calculadora.html', context)
 
 

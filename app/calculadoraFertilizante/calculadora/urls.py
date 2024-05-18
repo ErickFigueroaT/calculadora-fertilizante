@@ -5,5 +5,4 @@ from . import views
 
 urlpatterns = [
     path('calcula/', views.calculadora, name='calculadora'),
-    path('generar_pdf/', views.generar_pdf, name='generar_pdf'),
 ]

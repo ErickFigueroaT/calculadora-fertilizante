@@ -19,6 +19,7 @@ cultivos
         <label for="humedad" class="form-label">Humedad del Grano (%)</label>
         <input type="number" class="form-control" id="humedad" name="humedad" step="0.01" placeholder="Ingrese la humedad del grano" required>
     </div>
+    <button id="resetButton">Restablecer</button>
 
     <table class="table">
         <thead>
@@ -35,9 +36,10 @@ cultivos
                 <td>{{ cultivo.nombre }}</td>
                 <td>{{ cultivo.tipo_cultivo }}</td>
                 <td>
-                    <button type="submit" class="btn btn-success calcular-btn" name="cultivo_id" value="{{ cultivo.id }}">
+                    <button type="submit" class="btn btn-success calcular-btn">
                         Calcular
                     </button>
+                    <input type="number" hidden id="cultivoid" value="{{cultivo.id}}" name="cultivo_id">
                 </td>
             </tr>
             {% empty %}
@@ -49,13 +51,12 @@ cultivos
             {% endfor %}
         </tbody>
     </table>
-</form>
 
 <h2>Resultado</h2>
 <blockquote id="resultado">
     
     {% if todo %}
-    <table class="table">
+    <table class="table" id="tablaCalculo" >
         <thead>
             <tr>
                 <th>Nutriente</th>
@@ -73,26 +74,56 @@ cultivos
             </tbody>    
         {% endfor %}
     </table>
-    <form id="pdfForm" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="nombre" value="{{ nombre }}">
-        <input type="hidden" name="rendimiento" value="{{ rendimiento }}">
-        <input type="hidden" name="humedad" value="{{ humedad }}">
-        {% for nu, ab, ex in todo %}
-            <input type="hidden" name="nutrientes" value="{{ nu }}">
-            <input type="hidden" name="absorcion" value="{{ ab }}">
-            <input type="hidden" name="extraccion" value="{{ ex }}">
-        {% endfor %}
-        
-        <button type="submit"  id="pdfSubmit">Generar PDF</button>
-    </form>
-    {% else %}
-
     {% endif %}
+        {% csrf_token %}
+        <button type="submit" name="generar_pdf" id="pdfSubmit">Generar PDF</button>
+    </form>
+    
 </blockquote>
 
 {% endblock contenido %}
 
-{% block scripts %}
+
+{% block scripts %} 
+<script>
+    // Función para guardar valores en localStorage
+    function saveToLocalStorage() {
+        const rendimiento = document.getElementById('rendimiento').value;
+        const humedad = document.getElementById('humedad').value;
+        localStorage.setItem('rendimiento', rendimiento);
+        localStorage.setItem('humedad', humedad);
+    }
+
+    // Función para cargar valores de localStorage
+    function loadFromLocalStorage() {
+        const rendimiento = localStorage.getItem('rendimiento');
+        const humedad = localStorage.getItem('humedad');
+        if (rendimiento !== null) {
+            document.getElementById('rendimiento').value = rendimiento;
+        }
+        if (humedad !== null) {
+            document.getElementById('humedad').value = humedad;
+        }
+    }
+
+    // Función para restablecer valores
+    function resetValues() {
+        localStorage.removeItem('rendimiento');
+        localStorage.removeItem('humedad');
+        document.getElementById('rendimiento').value = '';
+        document.getElementById('humedad').value = '';
+    }
+
+    // Añadir eventos a los campos de formulario
+    document.getElementById('rendimiento').addEventListener('input', saveToLocalStorage);
+    document.getElementById('humedad').addEventListener('input', saveToLocalStorage);
+
+    // Añadir evento al botón de restablecer
+    document.getElementById('resetButton').addEventListener('click', resetValues);
+
+    // Cargar valores de localStorage cuando se carga la página
+    document.addEventListener('DOMContentLoaded', loadFromLocalStorage);
+</script>
 
 {% endblock scripts %}
+    
