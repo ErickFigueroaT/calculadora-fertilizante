@@ -15,13 +15,13 @@ Cultivos
             </tr>
         </thead>
         <tbody>
-            {% for tipo in object_list %}
+            {% for cultivo in object_list %}
             <tr>
-                <td>{{tipo.id}}</td>
-                <td>{{tipo.nombre}}</td>
+                <td>{{cultivo.id}}</td>
+                <td>{{cultivo.nombre}}</td>
                 <td>
-                    <a class="btn btn-outline-danger btn-sm" href="{% url 'eliminar_tipo_cultivo' tipo.id%}">Eliminar</a>
-                    <a class="btn btn-outline-primary btn-sm" href="{% url 'editar_tipo_cultivo' tipo.id%}">Editar</a>
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'eliminar_cultivo' cultivo.id%}">Eliminar</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'editar_cultivo' cultivo.id%}">Editar</a>
                 </td>
             </tr>
             {% endfor %}
