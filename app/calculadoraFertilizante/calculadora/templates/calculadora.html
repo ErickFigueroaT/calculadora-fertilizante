@@ -6,80 +6,135 @@ cultivos
 {% endblock titulo %}
 
 {% block contenido %}
-<h1>Cultivos</h1>
 
-<form id="calculoForm" method="post" action="{% url 'calculadora' %}">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="rendimiento" class="form-label">Rendimiento (kg ha<sup>-1</sup>)</label>
-        <input type="number" class="form-control" id="rendimiento" name="rendimiento" step="0.01" placeholder="Ingrese el rendimiento del grano" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="humedad" class="form-label">Humedad del Grano (%)</label>
-        <input type="number" class="form-control" id="humedad" name="humedad" step="0.01" placeholder="Ingrese la humedad del grano" required>
-    </div>
-    <button id="resetButton">Restablecer</button>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre de cultivo</th>
-                <th>Tipo Cultivo</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
+<style>
+    body {
+        background-image: url("{% static 'img/cultivos.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: 'Montserrat', sans-serif;
         
-        <tbody>
-            {% for cultivo in object_list %}
-            <tr>
-                <td>{{ cultivo.nombre }}</td>
-                <td>{{ cultivo.tipo_cultivo }}</td>
-                <td>
-                    <button type="submit" class="btn btn-success calcular-btn">
-                        Calcular
-                    </button>
-                    <input type="number" hidden id="cultivoid" value="{{cultivo.id}}" name="cultivo_id">
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="3">
-                    <p>No existen cultivos aún</p>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    }
 
-<blockquote id="resultado">
-    
-    {% if todo %}
-    <h2>Resultado</h2>
-    <button type="submit" name="generar_pdf" id="pdfSubmit">Generar PDF</button>
-    <table class="table" id="tablaCalculo" >
-        <thead>
-            <tr>
-                <th>Nutriente</th>
-                <th>Absorción (kg ha<sup>-1</sup>)</th>
-                <th>Extracción (kg ha<sup>-1</sup>)</th>
-            </tr>
-        </thead>
-        {% for nu, ab, ex in todo %}
-            <tbody>
-                <tr>
-                    <td>{{ nu }}</td>
-                    <td>{{ ab }}</td>
-                    <td>{{ ex }}</td>
-                </tr>
-            </tbody>    
-        {% endfor %}
-    </table>
-    </form>
-    {% endif %}
-    
-</blockquote>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin-top: -10px;
+        
+    }
 
+    .form-container {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .table {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #218838;
+    }
+
+
+</style>
+
+<div class="container">
+    <div class="form-container">
+        <h1>Cultivos</h1>
+
+        <form id="calculoForm" method="post" action="{% url 'calculadora' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="rendimiento" class="form-label">Rendimiento (kg ha<sup>-1</sup>)</label>
+                <input type="number" class="form-control" id="rendimiento" name="rendimiento" step="0.01" placeholder="Ingrese el rendimiento del grano" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="humedad" class="form-label">Humedad del Grano (%)</label>
+                <input type="number" class="form-control" id="humedad" name="humedad" step="0.01" placeholder="Ingrese la humedad del grano" required>
+            </div>
+            <button id="resetButton">Restablecer</button>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre de cultivo</th>
+                        <th>Tipo Cultivo</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for cultivo in object_list %}
+                    <tr>
+                        <td>{{ cultivo.nombre }}</td>
+                        <td>{{ cultivo.tipo_cultivo }}</td>
+                        <td>
+                            <button type="submit" class="btn btn-success calcular-btn">
+                                Calcular
+                            </button>
+                            <input type="number" hidden id="cultivoid" value="{{cultivo.id}}" name="cultivo_id">
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">
+                            <p>No existen cultivos aún</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        <blockquote id="resultado">
+            
+            {% if todo %}
+            <h2>Resultado</h2>
+            <button type="submit" name="generar_pdf" id="pdfSubmit">Generar PDF</button>
+            <table class="table" id="tablaCalculo" >
+                <thead>
+                    <tr>
+                        <th>Nutriente</th>
+                        <th>Absorción (kg ha<sup>-1</sup>)</th>
+                        <th>Extracción (kg ha<sup>-1</sup>)</th>
+                    </tr>
+                </thead>
+                {% for nu, ab, ex in todo %}
+                    <tbody>
+                        <tr>
+                            <td>{{ nu }}</td>
+                            <td>{{ ab }}</td>
+                            <td>{{ ex }}</td>
+                        </tr>
+                    </tbody>    
+                {% endfor %}
+                </table>
+                {% endif %}
+            </blockquote>
+        </form>
+    </div>
+</div>
 {% endblock contenido %}
 
 
