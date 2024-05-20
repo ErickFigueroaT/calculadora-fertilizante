@@ -5,8 +5,12 @@
 {% endblock titulo %}
 
 {% block contenido %}
-    <form method="post">{% csrf_token %}
-        <p>Deseas eliminar el tipo de cultivo "{{ object}}"?</p>
-        <input type="submit" value="Confirmar">
-    </form> 
+<div class="container">
+    <div class="form-container">
+        <form method="post">{% csrf_token %}
+            <p>Deseas eliminar el tipo de cultivo "{{ object}}"?</p>
+            <input type="submit" value="Confirmar">
+        </form> 
+    </div>
+</div>
 {% endblock contenido %}

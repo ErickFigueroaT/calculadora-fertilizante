@@ -5,27 +5,30 @@ Cultivos
 {% endblock titulo %}
 
 {% block contenido %}
-<h1>Cultivos</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for cultivo in object_list %}
-            <tr>
-                <td>{{cultivo.id}}</td>
-                <td>{{cultivo.nombre}}</td>
-                <td>
-                    <a class="btn btn-outline-danger btn-sm" href="{% url 'eliminar_cultivo' cultivo.id%}">Eliminar</a>
-                    <a class="btn btn-outline-primary btn-sm" href="{% url 'editar_cultivo' cultivo.id%}">Editar</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+<div class="container">
+    <div class="table-container">
+        <h1>Cultivos</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cultivo in object_list %}
+                <tr>
+                    <td>{{cultivo.id}}</td>
+                    <td>{{cultivo.nombre}}</td>
+                    <td>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'eliminar_cultivo' cultivo.id%}">Eliminar</a>
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'editar_cultivo' cultivo.id%}">Editar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock contenido %}

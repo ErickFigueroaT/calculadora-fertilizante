@@ -12,7 +12,7 @@ class NuevoTipoCultivo(LoginRequiredMixin,CreateView):
     model = TipoCultivo
     # fields = 'all'
     form_class = FormTipoCultivo
-    extra_context = {'accion':"Nueva"}
+    extra_context = {'accion':"Nuevo"}
     success_url = reverse_lazy ('lista_tipo_cultivo')
 
 class EditarTipoCultivo(LoginRequiredMixin,UpdateView):
@@ -33,7 +33,7 @@ class NuevoCultivo(LoginRequiredMixin,CreateView):
     model = Cultivo
     # fields = 'all'
     form_class = FormCultivo
-    extra_context = {'accion':"Nueva"}
+    extra_context = {'accion':"Nuevo"}
     success_url = reverse_lazy ('lista_cultivo')
 
 class EditarCultivo(LoginRequiredMixin,UpdateView):

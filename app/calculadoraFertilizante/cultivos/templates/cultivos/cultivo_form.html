@@ -6,13 +6,15 @@ Nuevo Cultivo
 
 
 {% block contenido %}
-<h1>{{accion}} Tipo Cultivo</h1>
 
-<form method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Guardar</button>
-
-</form>
-
+<div class="container">
+    <div class="form-container">
+        <h1>{{accion}} Cultivo</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</div>
 {% endblock contenido %}
