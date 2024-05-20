@@ -13,4 +13,8 @@
         </form> 
     </div>
 </div>
+    <form method="post">{% csrf_token %}
+        <p>Deseas eliminar el tipo de cultivo "{{ object.nombre}}"?</p>
+        <input type="submit" value="Confirmar">
+    </form> 
 {% endblock contenido %}
