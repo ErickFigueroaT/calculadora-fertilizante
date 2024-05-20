@@ -1,16 +1,17 @@
 from django.db import models
 
-# Create your models here.
-
+# Modelo para almacenar tipos de cultivo
 class TipoCultivo(models.Model):
-    nombre = models.CharField( max_length = 50)
+    nombre = models.CharField(max_length=50)  # Campo para el nombre del tipo de cultivo
 
-    def __str__(self) :
-        return self.nombre
+    def __str__(self):
+        return self.nombre  # Devuelve el nombre del tipo de cultivo como representación de cadena
 
+# Modelo para almacenar información sobre los cultivos y sus componentes químicos
 class Cultivo(models.Model):
-    nombre = models.CharField( max_length = 50)
-    tipo_cultivo = models.ForeignKey("cultivos.TipoCultivo", verbose_name="Tipo Cultivo", on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=50)  # Campo para el nombre del cultivo
+    tipo_cultivo = models.ForeignKey("cultivos.TipoCultivo", verbose_name="Tipo Cultivo", on_delete=models.CASCADE)  # Relación Muchos a Uno con TipoCultivo
+    # Campos para los componentes químicos y sus índices de criticidad
     N = models.FloatField(default=0.0)
     P = models.FloatField(default=0.0)
     K = models.FloatField(default=0.0)
@@ -25,8 +26,7 @@ class Cultivo(models.Model):
     Mo = models.FloatField(default=0.0)
     Zn = models.FloatField(default=0.0)
     Ni = models.FloatField(default=0.0)
-    
-    #para el IC de cada elemento
+    # Campos para los índices de criticidad de cada componente químico
     icN = models.FloatField(default=0.0)
     icP = models.FloatField(default=0.0)
     icK = models.FloatField(default=0.0)
@@ -42,6 +42,7 @@ class Cultivo(models.Model):
     icZn = models.FloatField(default=0.0)
     icNi = models.FloatField(default=0.0)
 
+    # Método para obtener una representación legible del objeto Cultivo
     def str(self):
         nutrientes = {
             "N": self.N, "P": self.P, "K": self.K, "Ca": self.Ca, "Mg": self.Mg,

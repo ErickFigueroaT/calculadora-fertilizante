@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-)3movt8enxg-f_1%-c90o#jzk%te=i6ftske0sqkfg3rzt3xft
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Define allowed hosts
 ALLOWED_HOSTS = ['*']
 
 
@@ -39,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'calculadora',
-    'usuario',
-    'cultivos',
+    'calculadora',  # Application for the calculator functionality
+    'usuario',      # Application for user management
+    'cultivos',     # Application for managing crops
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,7 @@ WSGI_APPLICATION = 'calculadoraFertilizante.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Configuration for the SQLite database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,6 +91,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
+# Password validation settings
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -108,20 +111,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
+# Language code
 LANGUAGE_CODE = 'en-us'
 
+# Time zone
 TIME_ZONE = 'UTC'
 
+# Internationalization settings
 USE_I18N = True
 
+# Time zone settings
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+# URL prefix for static files
 STATIC_URL = '/static/'
 
+# Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
@@ -129,8 +138,14 @@ STATICFILES_DIRS = (
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# URL to redirect to for login
 LOGIN_URL = reverse_lazy('login')
+
+# URL to redirect to after successful login
 LOGIN_REDIRECT_URL = reverse_lazy('bienvenida')
+
+# URL to redirect to after logout
 LOGOUT_REDIRECT_URL = reverse_lazy('login')

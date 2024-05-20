@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import  TemplateView
+from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from cultivos.models import Cultivo
 from cultivos.forms import FormCultivo
@@ -9,9 +9,22 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from io import BytesIO
 
-# Create your views here.
+# Define las vistas para la aplicación de la Calculadora de Fertilizante
 
 def generar_pdf(request, nombre, rendimiento, humedad, todo):
+    """
+    Vista para generar un documento PDF con los datos de la calculadora.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+    - nombre: Nombre del cultivo.
+    - rendimiento: Rendimiento del cultivo.
+    - humedad: Porcentaje de humedad del cultivo.
+    - todo: Lista de tuplas que contiene la información de los nutrientes.
+
+    Retorna:
+    - response: Respuesta HTTP con el PDF generado.
+    """
     # Crear contenido del PDF
     buffer = BytesIO()
     pdf = SimpleDocTemplate(buffer, pagesize=letter)
@@ -41,6 +54,15 @@ def generar_pdf(request, nombre, rendimiento, humedad, todo):
     return response
     
 def calculadora(request):
+    """
+    Vista para la calculadora de fertilizantes.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+
+    Retorna:
+    - render: Renderiza la plantilla 'calculadora.html' con los datos necesarios.
+    """
     cultivos = Cultivo.objects.all()
     context = {'object_list': cultivos}
 
@@ -67,8 +89,18 @@ def calculadora(request):
         
     return render(request, 'calculadora.html', context)
 
-
 def absorcion(rendimiento, humedad, nutrientes):
+    """
+    Función para calcular la absorción de nutrientes.
+
+    Parámetros:
+    - rendimiento: Rendimiento del cultivo.
+    - humedad: Porcentaje de humedad del cultivo.
+    - nutrientes: Diccionario que contiene los nutrientes y sus valores.
+
+    Retorna:
+    - absorcion: Lista con los valores de absorción calculados.
+    """
     absorcion = []
 
     for nutriente, valor in nutrientes.items():
@@ -78,6 +110,16 @@ def absorcion(rendimiento, humedad, nutrientes):
     return absorcion
 
 def extraccion(absorcion, ics):
+    """
+    Función para calcular la extracción de nutrientes.
+
+    Parámetros:
+    - absorcion: Lista con los valores de absorción.
+    - ics: Diccionario que contiene los índices de cultivo.
+
+    Retorna:
+    - extraccion: Lista con los valores de extracción calculados.
+    """
     extraccion = []
     valoresIcs = list(ics.values())
 
@@ -86,5 +128,8 @@ def extraccion(absorcion, ics):
 
     return extraccion
 
-class BienvenidaView(LoginRequiredMixin,TemplateView):
+class BienvenidaView(LoginRequiredMixin, TemplateView):
+    """
+    Vista para mostrar un mensaje de bienvenida al usuario logueado.
+    """
     template_name = 'bienvenida.html'

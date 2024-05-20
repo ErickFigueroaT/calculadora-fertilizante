@@ -1,35 +1,32 @@
+# Utiliza la imagen base de Python 3.11.0 con Debian Bullseye (Slim)
 FROM python:3.11.0-slim-bullseye
 
+# Actualiza el sistema y instala dependencias requeridas
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y \
-    apache2 \
-    libmariadb-dev \
-    libapache2-mod-wsgi-py3 \
-    pkg-config \
-    gcc 
+    apache2 \                       # Instala el servidor web Apache
+    libmariadb-dev \                # Instala las bibliotecas de desarrollo de MariaDB
+    libapache2-mod-wsgi-py3 \       # Instala el módulo de Apache para WSGI en Python 3
+    pkg-config \                    # Instala pkg-config para configuraciones de compilación
+    gcc                             # Instala el compilador de C
 
-# Configure timezone
+# Configura la zona horaria
 ENV TZ=America/Mexico_City
-RUN ln -snf  /etc/l/usr/share/zoneinfo/$TZocaltime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
+# Copia el archivo de requisitos del proyecto al directorio de trabajo del contenedor
 COPY ./requirements.txt /app/requirements.txt
-# COPY ./seguimiento.conf /etc/apache2/sites-available/
 
-# RUN adduser --disabled-password user
-
-# RUN chown www-data:www-data /app/log
-# RUN chown www-data:www-data /app/err_log
-
-# RUN a2ensite seguimiento.conf
-
-
+# Instala las dependencias del proyecto
 RUN pip3 install --upgrade pip
 RUN pip3 install -r /app/requirements.txt
 
+# Expone el puerto 80 para el tráfico HTTP
 EXPOSE 80
 
-CMD [ "apachectl", "-DFOREGROUND" ]
-
+# Define el comando predeterminado para ejecutar el contenedor
+CMD ["apachectl", "-DFOREGROUND"]
 

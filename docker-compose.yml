@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   app:
+    # Configuración del servicio de la aplicación
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -15,26 +16,27 @@ services:
     volumes:
       - ./app:/app
     environment:
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_HOST: ${DB_HOST}
-      DEBUG: ${DEBUG}
-      SECRET_KEY: ${SECRET_KEY}
+      DB_NAME: ${DB_NAME}          # Nombre de la base de datos
+      DB_USER: ${DB_USER}          # Usuario de la base de datos
+      DB_PASSWORD: ${DB_PASSWORD}  # Contraseña de la base de datos
+      DB_HOST: ${DB_HOST}          # Host de la base de datos
+      DEBUG: ${DEBUG}              # Configuración de depuración
+      SECRET_KEY: ${SECRET_KEY}    # Clave secreta para la aplicación
 
   db:
+    # Configuración del servicio de la base de datos
     image: mariadb
     container_name: fertilizantes-upn-db
     #restart: always
     environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}         # Nombre de la base de datos MySQL
+      MYSQL_USER: ${DB_USER}             # Usuario de la base de datos MySQL
+      MYSQL_PASSWORD: ${DB_PASSWORD}     # Contraseña de la base de datos MySQL
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}  # Contraseña de root de MySQL
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/mysql               # Volumen para persistencia de datos de la base de datos
     ports:
-      - 3310:3306
+      - 3310:3306                       # Puerto expuesto para la base de datos
 
 volumes:
-  db:
+  db:                                   # Definición del volumen para la base de datos
