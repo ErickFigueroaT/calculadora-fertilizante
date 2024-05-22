@@ -56,6 +56,9 @@ cultivos
         background-color: #218838;
     }
 
+    #pdfSubmit:hover{
+        background-color: #6d6d6d;
+    }
 
 </style>
 
@@ -74,7 +77,7 @@ cultivos
                 <label for="humedad" class="form-label">Humedad del Grano (%)</label>
                 <input type="number" class="form-control" id="humedad" name="humedad" step="0.01" placeholder="Ingrese la humedad del grano" required>
             </div>
-            <button id="resetButton">Restablecer</button>
+            
             <br>
             <label for="estudioSuelo">¿Tienes estudio del suelo?</label>
             <input type="checkbox" name="estudioSuelo" id="estudioSuelo">
@@ -91,6 +94,8 @@ cultivos
                 <label for="ppmMg" class="form-label">Magnesio (Mg)</label>
                 <input type="number" class="form-control" id="ppmMg" name="ppmMg" step="1" placeholder="Ingrese ppm del magnesio." >
             </div>
+            <br>
+            <button id="resetButton">Restablecer</button>
             <br>
             <table class="table">
                 <thead>
@@ -127,7 +132,8 @@ cultivos
             
             {% if todo %}
             <h2>Resultado</h2>
-            <button type="submit" name="generar_pdf" id="pdfSubmit">Generar PDF</button>
+            <button type="submit" name="generar_pdf" id="pdfSubmit" style="background-color: white; color: #333; 
+            border: 2px solid #333; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">Generar PDF</button>            
             <table class="table" id="tablaCalculo" >
                 <thead>
                     <tr>
