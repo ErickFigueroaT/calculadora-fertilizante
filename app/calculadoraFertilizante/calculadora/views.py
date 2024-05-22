@@ -6,8 +6,9 @@ from cultivos.forms import FormCultivo
 from django.http import HttpResponse
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle,Paragraph
 from io import BytesIO
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
 # Define las vistas para la aplicación de la Calculadora de Fertilizante
 
@@ -26,60 +27,72 @@ def generar_pdf(request, nombre, rendimiento, humedad, todo,columnas):
     - response: Respuesta HTTP con el PDF generado.
     """
     # Crear contenido del PDF
-    if columnas==3:
-        buffer = BytesIO()
-        pdf = SimpleDocTemplate(buffer, pagesize=letter)
+def generar_pdf(request, nombre, rendimiento, humedad, todo, columnas):
+    """
+    Vista para generar un documento PDF con los datos de la calculadora.
+
+    Parámetros:
+    - request: La solicitud HTTP recibida.
+    - nombre: Nombre del cultivo.
+    - rendimiento: Rendimiento del cultivo.
+    - humedad: Porcentaje de humedad del cultivo.
+    - todo: Lista de tuplas que contiene la información de los nutrientes.
+
+    Retorna:
+    - response: Respuesta HTTP con el PDF generado.
+    """
+    # Crear contenido del PDF
+    buffer = BytesIO()
+    pdf = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Estilos
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        name='TitleStyle',
+        parent=styles['Heading1'],
+        alignment=1,  # 0 = left, 1 = center, 2 = right
+        fontSize=16,
+        textColor=colors.darkblue
+    )
+
+    
+
+    if columnas == 3:
+        # Título del PDF
+        titulo = Paragraph(f"Informe de {nombre}", title_style)
         data = [['Nutriente', 'Absorción (kg ha^-1)', 'Extracción (kg ha^-1)']]
         for nu, ab, ex in todo:
             data.append([nu, ab, ex])
-        t = Table(data)
-        style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-                            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-                            ('GRID', (0, 0), (-1, -1), 1, colors.black)])
-        t.setStyle(style)
-
-        # Construir PDF
-        elementos = [t]
-        pdf.build(elementos)
-        buffer.seek(0)
-
-        # Generar respuesta HTTP con el PDF
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="informe.pdf"'
-        response.write(buffer.getvalue())
-        buffer.close()
-        return response
     else:
-        buffer = BytesIO()
-        pdf = SimpleDocTemplate(buffer, pagesize=letter)
-        data = [['Nutriente', 'Absorción (kg ha^-1)', 'Extracción (kg ha^-1)','Absorción con estudio de suelo']]
-        for nu, ab, ex,ppm in todo:
-            data.append([nu, ab, ex,ppm])
-        t = Table(data)
-        style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-                            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-                            ('GRID', (0, 0), (-1, -1), 1, colors.black)])
-        t.setStyle(style)
+        titulo = Paragraph(f"Informe de {nombre} con estudio de suelo", title_style)
 
-        # Construir PDF
-        elementos = [t]
-        pdf.build(elementos)
-        buffer.seek(0)
+        data = [['Nutriente', 'Absorción (kg ha^-1)', 'Extracción (kg ha^-1)', 'Absorción con estudio de suelo']]
+        for nu, ab, ex, ppm in todo:
+            data.append([nu, ab, ex, ppm])
 
-        # Generar respuesta HTTP con el PDF
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="informe.pdf"'
-        response.write(buffer.getvalue())
-        buffer.close()
-        return response
+    t = Table(data)
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ])
+    t.setStyle(style)
+
+    # Construir PDF
+    elementos = [titulo, t]
+    pdf.build(elementos)
+    buffer.seek(0)
+
+    # Generar respuesta HTTP con el PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="informe.pdf"'
+    response.write(buffer.getvalue())
+    buffer.close()
+    return response
     
 def calculadora(request):
     """
