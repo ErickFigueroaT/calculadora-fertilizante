@@ -75,7 +75,23 @@ cultivos
                 <input type="number" class="form-control" id="humedad" name="humedad" step="0.01" placeholder="Ingrese la humedad del grano" required>
             </div>
             <button id="resetButton">Restablecer</button>
-
+            <br>
+            <label for="estudioSuelo">¿Tienes estudio del suelo?</label>
+            <input type="checkbox" name="estudioSuelo" id="estudioSuelo">
+            <div id="contenidoExtra" style="display:none;">
+                <p>Ingrese las partes por millon (ppm) de su estudio de suelo.</p>
+                <label for="ppmN" class="form-label">Nitrogeno (N)</label>
+                <input type="number" class="form-control" id="ppmN" name="ppmN" step="1" placeholder="Ingrese ppm del nitrogeno." >
+                <label for="ppmP" class="form-label">Fosforo (P)</label>
+                <input type="number" class="form-control" id="ppmP" name="ppmP" step="1" placeholder="Ingrese ppm del fosforo." >
+                <label for="ppmK" class="form-label">Potasio (K)</label>
+                <input type="number" class="form-control" id="ppmK" name="ppmK" step="1" placeholder="Ingrese ppm del potasio." >
+                <label for="ppmCa" class="form-label">Calcio (Ca)</label>
+                <input type="number" class="form-control" id="ppmCa" name="ppmCa" step="1" placeholder="Ingrese ppm del calcio." >
+                <label for="ppmMg" class="form-label">Magnesio (Mg)</label>
+                <input type="number" class="form-control" id="ppmMg" name="ppmMg" step="1" placeholder="Ingrese ppm del magnesio." >
+            </div>
+            <br>
             <table class="table">
                 <thead>
                     <tr>
@@ -118,9 +134,28 @@ cultivos
                         <th>Nutriente</th>
                         <th>Absorción (kg ha<sup>-1</sup>)</th>
                         <th>Extracción (kg ha<sup>-1</sup>)</th>
+                        
+                        {% if ppm %}
+                            <th>Absorción con estudio de suelo. (kg ha<sup>-1</sup>)</th>
+                        {% endif %}
+                            
+                        
                     </tr>
                 </thead>
-                {% for nu, ab, ex in todo %}
+                
+                {% if ppm %}
+                    {% for nu, ab, ex, ppm in todo %}
+                    <tbody>
+                        <tr>
+                            <td>{{ nu }}</td>
+                            <td>{{ ab }}</td>
+                            <td>{{ ex }}</td>
+                            <td>{{ ppm }}</td>
+                        </tr>
+                    </tbody>    
+                    {% endfor %}
+                {% else %}
+                    {% for nu, ab, ex in todo %}
                     <tbody>
                         <tr>
                             <td>{{ nu }}</td>
@@ -128,7 +163,8 @@ cultivos
                             <td>{{ ex }}</td>
                         </tr>
                     </tbody>    
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
                 </table>
                 {% endif %}
             </blockquote>
@@ -144,19 +180,49 @@ cultivos
     function saveToLocalStorage() {
         const rendimiento = document.getElementById('rendimiento').value;
         const humedad = document.getElementById('humedad').value;
+        const ppmN = document.getElementById('ppmN').value;
+        const ppmP = document.getElementById('ppmP').value;
+        const ppmK = document.getElementById('ppmK').value;
+        const ppmCa = document.getElementById('ppmCa').value;
+        const ppmMg = document.getElementById('ppmMg').value;
         localStorage.setItem('rendimiento', rendimiento);
         localStorage.setItem('humedad', humedad);
+        localStorage.setItem('ppmN', ppmN);
+        localStorage.setItem('ppmP', ppmP);
+        localStorage.setItem('ppmK', ppmK);
+        localStorage.setItem('ppmCa', ppmCa);
+        localStorage.setItem('ppmMg', ppmMg);
     }
 
     // Función para cargar valores de localStorage
     function loadFromLocalStorage() {
         const rendimiento = localStorage.getItem('rendimiento');
         const humedad = localStorage.getItem('humedad');
+        const ppmN = localStorage.getItem('ppmN');
+        const ppmP = localStorage.getItem('ppmP');
+        const ppmK = localStorage.getItem('ppmK');
+        const ppmCa = localStorage.getItem('ppmCa');
+        const ppmMg = localStorage.getItem('ppmMg');
         if (rendimiento !== null) {
             document.getElementById('rendimiento').value = rendimiento;
         }
         if (humedad !== null) {
             document.getElementById('humedad').value = humedad;
+        }
+        if (ppmN !== null) {
+            document.getElementById('ppmN').value = ppmN;
+        }
+        if (ppmP !== null) {
+            document.getElementById('ppmP').value = ppmP;
+        }
+        if (ppmK !== null) {
+            document.getElementById('ppmK').value = ppmK;
+        }
+        if (ppmCa !== null) {
+            document.getElementById('ppmCa').value = ppmCa;
+        }
+        if (ppmMg !== null) {
+            document.getElementById('ppmMg').value = ppmMg;
         }
     }
 
@@ -164,13 +230,29 @@ cultivos
     function resetValues() {
         localStorage.removeItem('rendimiento');
         localStorage.removeItem('humedad');
+        localStorage.removeItem('ppmN');
+        localStorage.removeItem('ppmP');
+        localStorage.removeItem('ppmK');
+        localStorage.removeItem('ppmCa');
+        localStorage.removeItem('ppmMg');
+        localStorage.removeItem('hectareas');
         document.getElementById('rendimiento').value = '';
         document.getElementById('humedad').value = '';
+        document.getElementById('ppmN').value = '';
+        document.getElementById('ppmP').value = '';
+        document.getElementById('ppmK').value = '';
+        document.getElementById('ppmCa').value = '';
+        document.getElementById('ppmMg').value = '';
     }
 
     // Añadir eventos a los campos de formulario
     document.getElementById('rendimiento').addEventListener('input', saveToLocalStorage);
     document.getElementById('humedad').addEventListener('input', saveToLocalStorage);
+    document.getElementById('ppmN').addEventListener('input', saveToLocalStorage);
+    document.getElementById('ppmP').addEventListener('input', saveToLocalStorage);
+    document.getElementById('ppmK').addEventListener('input', saveToLocalStorage);
+    document.getElementById('ppmCa').addEventListener('input', saveToLocalStorage);
+    document.getElementById('ppmMg').addEventListener('input', saveToLocalStorage);
 
     // Añadir evento al botón de restablecer
     document.getElementById('resetButton').addEventListener('click', resetValues);
@@ -178,6 +260,19 @@ cultivos
     // Cargar valores de localStorage cuando se carga la página
     document.addEventListener('DOMContentLoaded', loadFromLocalStorage);
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var checkbox = document.getElementById('estudioSuelo');
+        var contenidoExtra = document.getElementById('contenidoExtra');
 
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                contenidoExtra.style.display = 'block';
+            } else {
+                contenidoExtra.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock scripts %}
     

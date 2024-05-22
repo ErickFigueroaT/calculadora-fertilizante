@@ -71,8 +71,17 @@ def calculadora(request):
         humedad = float(request.POST.get('humedad'))
         cultivo = Cultivo.objects.get(id=request.POST.get('cultivo_id'))
         nombre, tipo, nutrientes, ics = cultivo.str()  
+        
+        ppm = []
 
+        ppm.append(request.POST.get('ppmN', 0))
+        ppm.append(request.POST.get('ppmP', 0))
+        ppm.append(request.POST.get('ppmK', 0))
+        ppm.append(request.POST.get('ppmCa', 0))
+        ppm.append(request.POST.get('ppmMg', 0))
+        
         absor = absorcion(rendimiento, humedad, nutrientes)
+
         extrac = extraccion(absor, ics)
         nutr = nutrientes.keys()
 
@@ -81,13 +90,32 @@ def calculadora(request):
         context['humedad'] = humedad
         
         todo = zip(nutr, absor, extrac)
-        context['todo'] = todo
 
+        if ppm[0] != '':
+            absppm = ppmCalculo(absor, ppm)
+            todo = zip(nutr, absor, extrac, absppm)
+            context['ppm'] = 1
+        context['todo'] = todo
+        
         # Redirigir a la vista generar_pdf con los datos calculados
         if 'generar_pdf' in request.POST:
             return generar_pdf(request, nombre, rendimiento, humedad, todo)
         
     return render(request, 'calculadora.html', context)
+
+def ppmCalculo(absorcion, ppm):
+    ppmcal = []
+    for ab, pp in zip(absorcion, ppm):
+        # conversion de ppm a kg&ha
+        kghaNutriente = int(pp) / 1000
+        kghaNutriente *= 10000 
+        if ab - kghaNutriente < 0:
+            ppmcal.append("El suelo tiene el suficiente nutriente.")
+        else:
+            ppmcal.append(ab - kghaNutriente)
+    ppmcal += absorcion[5:]
+    print(ppmcal)
+    return ppmcal
 
 def absorcion(rendimiento, humedad, nutrientes):
     """
