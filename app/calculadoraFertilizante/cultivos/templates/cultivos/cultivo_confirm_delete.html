@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 
+
 {% block titulo %}
     Eliminar tipo cultivo
 {% endblock titulo %}
 
+
 {% block contenido %}
 <div class="container">
     <div class="form-container">
-        <form method="post">{% csrf_token %}
-            <p>Deseas eliminar el tipo de cultivo "{{ object}}"?</p>
-            <input type="submit" value="Confirmar">
+    <form method="post">{% csrf_token %}
+            <p>Deseas eliminar el cultivo: "{{ object.nombre }}"?</p>
+            {{ form }}
+            <input type="submit" value="Confirmar" class="btn-confirmar">
         </form> 
     </div>
 </div>
-    <form method="post">{% csrf_token %}
-        <p>Deseas eliminar el tipo de cultivo "{{ object.nombre}}"?</p>
-        <input type="submit" value="Confirmar">
-    </form> 
 {% endblock contenido %}
+
+
