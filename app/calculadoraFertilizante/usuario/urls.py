@@ -15,4 +15,6 @@ urlpatterns = [
     path('registrar/', views.RegistrarView.as_view(), name='registrar'),  # URL para registrar un nuevo usuario
     path('entrar/', views.LoginView.as_view(), name='login'),  # URL para iniciar sesión de usuario
     path('salir/', LogoutView.as_view(), name='logout'),  # URL para cerrar sesión de usuario
+    path('confirmar_registro/<str:uidb64>/<str:token>/', views.confirmar_registro, name='confirmar_registro'),
+
 ]

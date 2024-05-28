@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -221,10 +223,13 @@
                             Cultivos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if user.is_authenticated and user|is_admin %}
+                               
+                                <li><a class="dropdown-item" href="{% url 'nuevo_tipo_cultivo' %}">Nuevo Tipo de Cultivo</a></li>
+                                <li><a class="dropdown-item" href="{% url 'nuevo_cultivo' %}">Nuevo Cultivo</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'lista_cultivo' %}">Lista de Cultivos</a></li>
                             <li><a class="dropdown-item" href="{% url 'lista_tipo_cultivo' %}">Lista de Tipos de Cultivos</a></li>
-                            <li><a class="dropdown-item" href="{% url 'nuevo_tipo_cultivo' %}">Nuevo Tipo de Cultivo</a></li>
-                            <li><a class="dropdown-item" href="{% url 'nuevo_cultivo' %}">Nuevo Cultivo</a></li>
                         </ul>
                     </li>
                 </ul>

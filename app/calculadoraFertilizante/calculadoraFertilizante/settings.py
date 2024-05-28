@@ -149,3 +149,9 @@ LOGIN_REDIRECT_URL = reverse_lazy('bienvenida')
 
 # URL to redirect to after logout
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'confirmacioncalculadora@gmail.com'
+EMAIL_HOST_PASSWORD = '1confirmacioncalculadora.'

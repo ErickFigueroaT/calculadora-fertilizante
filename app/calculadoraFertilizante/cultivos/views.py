@@ -4,9 +4,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import TipoCultivo, Cultivo
 from .forms import FormTipoCultivo, FormCultivo
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 
 # Vista basada en clase que muestra una lista de tipos de cultivo
-class ListaTipoCultivo(LoginRequiredMixin, ListView):
+class ListaTipoCultivo(ListView):
     model = TipoCultivo
 
 # Vista basada en clase para crear un nuevo tipo de cultivo
