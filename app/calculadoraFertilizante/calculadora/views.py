@@ -9,9 +9,11 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle,Paragraph
 from io import BytesIO
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Define las vistas para la aplicación de la Calculadora de Fertilizante
-
+@login_required
 def generar_pdf(request, nombre, rendimiento, humedad, todo,columnas):
     """
     Vista para generar un documento PDF con los datos de la calculadora.
@@ -27,6 +29,8 @@ def generar_pdf(request, nombre, rendimiento, humedad, todo,columnas):
     - response: Respuesta HTTP con el PDF generado.
     """
     # Crear contenido del PDF
+@login_required
+
 def generar_pdf(request, nombre, rendimiento, humedad, todo, columnas):
     """
     Vista para generar un documento PDF con los datos de la calculadora.
@@ -93,7 +97,8 @@ def generar_pdf(request, nombre, rendimiento, humedad, todo, columnas):
     response.write(buffer.getvalue())
     buffer.close()
     return response
-    
+@login_required
+
 def calculadora(request):
     """
     Vista para la calculadora de fertilizantes.
@@ -145,6 +150,7 @@ def calculadora(request):
             return generar_pdf(request, nombre, rendimiento, humedad, todo,columnas)
         
     return render(request, 'calculadora.html', context)
+@login_required
 
 def ppmCalculo(absorcion, ppm):
     ppmcal = []
@@ -159,6 +165,7 @@ def ppmCalculo(absorcion, ppm):
     ppmcal += absorcion[5:]
     print(ppmcal)
     return ppmcal
+@login_required
 
 def absorcion(rendimiento, humedad, nutrientes):
     """
@@ -179,6 +186,7 @@ def absorcion(rendimiento, humedad, nutrientes):
         absorcion.append(round(resultado, 2))
 
     return absorcion
+@login_required
 
 def extraccion(absorcion, ics):
     """

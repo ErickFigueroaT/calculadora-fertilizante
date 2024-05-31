@@ -155,3 +155,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'confirmacioncalculadora@gmail.com'
 EMAIL_HOST_PASSWORD = '1confirmacioncalculadora.'
+EMAIL_HOST_PASSWORD = 'mdcd pctz opbq ijsg'
