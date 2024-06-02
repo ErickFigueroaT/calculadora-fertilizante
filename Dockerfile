@@ -3,12 +3,14 @@ FROM python:3.11.0-slim-bullseye
 
 # Actualiza el sistema y instala dependencias requeridas
 RUN apt-get update && apt-get upgrade -y
+
+# Instala los paquetes necesarios
 RUN apt-get install -y \
-    apache2 \                       # Instala el servidor web Apache
-    libmariadb-dev \                # Instala las bibliotecas de desarrollo de MariaDB
-    libapache2-mod-wsgi-py3 \       # Instala el módulo de Apache para WSGI en Python 3
-    pkg-config \                    # Instala pkg-config para configuraciones de compilación
-    gcc                             # Instala el compilador de C
+    apache2 \
+    libmariadb-dev \
+    libapache2-mod-wsgi-py3 \
+    pkg-config \
+    gcc                           # Instala el compilador de C
 
 # Configura la zona horaria
 ENV TZ=America/Mexico_City

@@ -1,9 +1,12 @@
 {% autoescape off %}
 Hola {{ user.username }},
 
-Por favor, haz clic en el siguiente enlace para confirmar tu registro en MiSitio:
+Por favor, haz clic en el siguiente enlace para confirmar tu registro en calculadora fertilizante:
+<a href = "http://{{ sitio }}{% url 'confirmar_registro' uidb64=uid token=token %}">
+    Activar cuenta
+   
+</a>
 
-http://{{ domain }}{% url 'confirmar_registro' uidb64=uid token=token %}
 
 Si no has solicitado este registro, puedes ignorar este correo electrónico.
 

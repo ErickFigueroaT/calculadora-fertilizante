@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
 
@@ -15,6 +15,6 @@ urlpatterns = [
     path('registrar/', views.RegistrarView.as_view(), name='registrar'),  # URL para registrar un nuevo usuario
     path('entrar/', views.LoginView.as_view(), name='login'),  # URL para iniciar sesión de usuario
     path('salir/', LogoutView.as_view(), name='logout'),  # URL para cerrar sesión de usuario
-    path('confirmar/<uidb64>/<token>/', views.confirmar_registro, name='confirmar_registro'),
+    path('confirmar/<slug:uidb64>/<slug:token>', views.ConfirmarRegistro.as_view(), name='confirmar_registro'),
 
 ]
