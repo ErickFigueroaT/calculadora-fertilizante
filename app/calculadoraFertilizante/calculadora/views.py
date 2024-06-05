@@ -94,6 +94,7 @@ def generar_pdf(request, nombre, rendimiento, humedad, todo, columnas):
     - render: Renderiza la plantilla 'calculadora.html' con los datos necesarios.
     """
 
+@login_required
 
 def calculadora(request):
     
@@ -108,11 +109,12 @@ def calculadora(request):
        
         ppm = []
         columnas = 3
-        ppm.append(request.POST.get('ppmN', 0))
-        ppm.append(request.POST.get('ppmP', 0))
-        ppm.append(request.POST.get('ppmK', 0))
-        ppm.append(request.POST.get('ppmCa', 0))
-        ppm.append(request.POST.get('ppmMg', 0))
+        
+        ppm.append(float(request.POST.get('ppmN', 0) or 0))
+        ppm.append(float(request.POST.get('ppmP', 0) or 0))
+        ppm.append(float(request.POST.get('ppmK', 0) or 0))
+        ppm.append(float(request.POST.get('ppmCa', 0) or 0))
+        ppm.append(float(request.POST.get('ppmMg', 0) or 0))
         
         absor = absorcion(rendimiento, humedad, nutrientes)
 
