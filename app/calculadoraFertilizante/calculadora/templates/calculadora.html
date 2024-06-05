@@ -106,32 +106,39 @@ cultivos
                 </thead>
                 
                 <tbody>
-                    {% for cultivo in object_list %}
-                    <tr>
-                        <td>{{ cultivo.nombre }}</td>
-                        <td>{{ cultivo.tipo_cultivo }}</td>
-                        <td>
-                            <button type="submit" class="btn btn-success calcular-btn">
-                                Calcular
-                            </button>
-                            <input type="number" hidden id="cultivoid" value="{{cultivo.id}}" name="cultivo_id">
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="3">
-                            <p>No existen cultivos aún</p>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                    
+                        {% for cultivo in object_list %}
+                        <tr>
+                            <td>{{ cultivo.nombre }}</td>
+                            <td>{{ cultivo.tipo_cultivo }}</td>
+                            <td>
+                                <button type="button"  class="calcular-btn" id="calcular-{{ cultivo.id }}" data-cultivo-id="{{ cultivo.id }}">
+                                    Calcular
+                                </button>
+                                
+                            </td>
+                            
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3">
+                                <p>No existen cultivos aún</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+
                 </tbody>
             </table>
+            
+            <input type="hidden" id="cultivo_id" name="cultivo_id">
+            
 
             <blockquote id="resultado">
             
             {% if todo %}
             <h2>Resultado</h2>
-            <button type="submit" name="generar_pdf" id="pdfSubmit" class="btn_pdf">Generar PDF</button>            
+            <button type="submit" name="generar_pdf" id="pdfSubmit" class="btn btn-primary btn_pdf">Generar PDF</button>            
             <table class="table" id="tablaCalculo" >
                 <thead>
                     <tr>
@@ -190,6 +197,7 @@ cultivos
         const ppmK = document.getElementById('ppmK').value;
         const ppmCa = document.getElementById('ppmCa').value;
         const ppmMg = document.getElementById('ppmMg').value;
+        const cultivo_id = document.getElementById('cultivo_id').value;
         localStorage.setItem('rendimiento', rendimiento);
         localStorage.setItem('humedad', humedad);
         localStorage.setItem('ppmN', ppmN);
@@ -197,6 +205,7 @@ cultivos
         localStorage.setItem('ppmK', ppmK);
         localStorage.setItem('ppmCa', ppmCa);
         localStorage.setItem('ppmMg', ppmMg);
+        localStorage.setItem('cultivo_id', cultivo_id);
     }
 
     // Función para cargar valores de localStorage
@@ -208,6 +217,7 @@ cultivos
         const ppmK = localStorage.getItem('ppmK');
         const ppmCa = localStorage.getItem('ppmCa');
         const ppmMg = localStorage.getItem('ppmMg');
+        const cultivo_id = localStorage.getItem('cultivo_id');
         if (rendimiento !== null) {
             document.getElementById('rendimiento').value = rendimiento;
         }
@@ -229,6 +239,9 @@ cultivos
         if (ppmMg !== null) {
             document.getElementById('ppmMg').value = ppmMg;
         }
+        if (cultivo_id !== null) {
+            document.getElementById('cultivo_id').value = cultivo_id;
+        }
     }
 
     // Función para restablecer valores
@@ -248,6 +261,7 @@ cultivos
         document.getElementById('ppmK').value = '';
         document.getElementById('ppmCa').value = '';
         document.getElementById('ppmMg').value = '';
+        document.getElementById('cultivo_id').value = '';
     }
 
     // Añadir eventos a los campos de formulario
@@ -258,6 +272,7 @@ cultivos
     document.getElementById('ppmK').addEventListener('input', saveToLocalStorage);
     document.getElementById('ppmCa').addEventListener('input', saveToLocalStorage);
     document.getElementById('ppmMg').addEventListener('input', saveToLocalStorage);
+    document.getElementById('cultivo_id').addEventListener('load', saveToLocalStorage);
 
     // Añadir evento al botón de restablecer
     document.getElementById('resetButton').addEventListener('click', resetValues);
@@ -285,5 +300,27 @@ cultivos
         return new bootstrap.Tooltip(tooltipListEl)
     })
 </script>
+<script>
+    // Captura el clic en cualquier botón con la clase "calcular-btn"
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('calcular-btn')) {
+            // Obtiene el ID del cultivo desde el atributo de datos
+            var cultivoId = event.target.getAttribute('data-cultivo-id');
+            
+            // Ahora puedes hacer lo que necesites con el ID del cultivo,
+            // como enviarlo al backend mediante una solicitud AJAX o
+            // redireccionar a una URL con el ID como parámetro
+            // Aquí solo imprimimos el ID en la consola para demostrarlo
+            console.log("ID del cultivo:", cultivoId);
+            // Establece el valor del campo de entrada oculto 'cultivo_id' en el formulario
+            document.getElementById('cultivo_id').value = cultivoId;
+            saveToLocalStorage()
+            
+            // Envía el formulario
+           document.getElementById('calculoForm').submit();
+        }
+    });
+</script>
+
 {% endblock scripts %}
     

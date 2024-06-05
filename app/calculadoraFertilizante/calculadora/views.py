@@ -105,7 +105,7 @@ def calculadora(request):
         humedad = float(request.POST.get('humedad'))
         cultivo = Cultivo.objects.get(id=request.POST.get('cultivo_id'))
         nombre, tipo, nutrientes, ics = cultivo.str()  
-      
+       
         ppm = []
         columnas = 3
         ppm.append(request.POST.get('ppmN', 0))
@@ -124,7 +124,7 @@ def calculadora(request):
         context['humedad'] = humedad
         
         todo = zip(nutr, absor, extrac)
-
+        print(nombre)
         if ppm[0] != '':
             absppm = ppmCalculo(absor, ppm)
             todo = zip(nutr, absor, extrac, absppm)
