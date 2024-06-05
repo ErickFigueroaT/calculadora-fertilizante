@@ -13,38 +13,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 # Define las vistas para la aplicación de la Calculadora de Fertilizante
-@login_required
-def generar_pdf(request, nombre, rendimiento, humedad, todo,columnas):
-    """
-    Vista para generar un documento PDF con los datos de la calculadora.
+"""
+Vista para generar un documento PDF con los datos de la calculadora.
 
-    Parámetros:
-    - request: La solicitud HTTP recibida.
-    - nombre: Nombre del cultivo.
-    - rendimiento: Rendimiento del cultivo.
-    - humedad: Porcentaje de humedad del cultivo.
-    - todo: Lista de tuplas que contiene la información de los nutrientes.
+Parámetros:
+- request: La solicitud HTTP recibida.
+- nombre: Nombre del cultivo.
+- rendimiento: Rendimiento del cultivo.
+- humedad: Porcentaje de humedad del cultivo.
+- todo: Lista de tuplas que contiene la información de los nutrientes.
 
-    Retorna:
-    - response: Respuesta HTTP con el PDF generado.
-    """
+Retorna:
+- response: Respuesta HTTP con el PDF generado.
+"""
     # Crear contenido del PDF
 @login_required
 
 def generar_pdf(request, nombre, rendimiento, humedad, todo, columnas):
-    """
-    Vista para generar un documento PDF con los datos de la calculadora.
-
-    Parámetros:
-    - request: La solicitud HTTP recibida.
-    - nombre: Nombre del cultivo.
-    - rendimiento: Rendimiento del cultivo.
-    - humedad: Porcentaje de humedad del cultivo.
-    - todo: Lista de tuplas que contiene la información de los nutrientes.
-
-    Retorna:
-    - response: Respuesta HTTP con el PDF generado.
-    """
+    
     # Crear contenido del PDF
     buffer = BytesIO()
     pdf = SimpleDocTemplate(buffer, pagesize=letter)
@@ -97,10 +83,8 @@ def generar_pdf(request, nombre, rendimiento, humedad, todo, columnas):
     response.write(buffer.getvalue())
     buffer.close()
     return response
-@login_required
 
-def calculadora(request):
-    """
+"""
     Vista para la calculadora de fertilizantes.
 
     Parámetros:
@@ -109,6 +93,10 @@ def calculadora(request):
     Retorna:
     - render: Renderiza la plantilla 'calculadora.html' con los datos necesarios.
     """
+
+
+def calculadora(request):
+    
     cultivos = Cultivo.objects.all()
     context = {'object_list': cultivos}
 
@@ -150,7 +138,6 @@ def calculadora(request):
             return generar_pdf(request, nombre, rendimiento, humedad, todo,columnas)
         
     return render(request, 'calculadora.html', context)
-@login_required
 
 def ppmCalculo(absorcion, ppm):
     ppmcal = []
@@ -165,10 +152,8 @@ def ppmCalculo(absorcion, ppm):
     ppmcal += absorcion[5:]
     print(ppmcal)
     return ppmcal
-@login_required
 
-def absorcion(rendimiento, humedad, nutrientes):
-    """
+"""
     Función para calcular la absorción de nutrientes.
 
     Parámetros:
@@ -179,6 +164,9 @@ def absorcion(rendimiento, humedad, nutrientes):
     Retorna:
     - absorcion: Lista con los valores de absorción calculados.
     """
+
+def absorcion(rendimiento, humedad, nutrientes):
+    
     absorcion = []
 
     for nutriente, valor in nutrientes.items():
@@ -186,10 +174,8 @@ def absorcion(rendimiento, humedad, nutrientes):
         absorcion.append(round(resultado, 2))
 
     return absorcion
-@login_required
 
-def extraccion(absorcion, ics):
-    """
+"""
     Función para calcular la extracción de nutrientes.
 
     Parámetros:
@@ -199,6 +185,9 @@ def extraccion(absorcion, ics):
     Retorna:
     - extraccion: Lista con los valores de extracción calculados.
     """
+
+def extraccion(absorcion, ics):
+    
     extraccion = []
     valoresIcs = list(ics.values())
 
@@ -207,8 +196,9 @@ def extraccion(absorcion, ics):
 
     return extraccion
 
-class BienvenidaView(LoginRequiredMixin, TemplateView):
-    """
+"""
     Vista para mostrar un mensaje de bienvenida al usuario logueado.
     """
+class BienvenidaView(LoginRequiredMixin, TemplateView):
+    
     template_name = 'bienvenida.html'

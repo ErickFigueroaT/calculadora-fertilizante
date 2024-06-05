@@ -20,10 +20,10 @@
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="{% url 'bienvenida' %}" class="h1"><b>Admin</b>LTE</a>
+      <a href="{% url 'bienvenida' %}" class="h1"><b>Agro</b>Fert</a>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Register a new membership</p>
+      <p class="login-box-msg">Registrar Nuevo Usuario</p>
       
       <form  method="post">
         {% csrf_token %}
@@ -82,7 +82,7 @@
 
      
 
-      <a href="{% url 'login' %}" class="text-center">I already have a membership</a>
+      <a href="{% url 'login' %}" class="text-center">Ya tengo una cuenta</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
